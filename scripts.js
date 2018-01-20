@@ -30,7 +30,7 @@ var appConsts = {
 	urlTwitterServer: "http://twitter.myword.io/", //backup, in case config.json is missing
 	domain: "myword.io", //the real value is set in startup () 
 	version: "0.73"
-	};
+};
 var appPrefs = {
 	authorName: "", authorWebsite: "",
 	ctStartups: 0, minSecsBetwAutoSaves: 3,
@@ -48,7 +48,7 @@ var appPrefs = {
 	fileSerialnum: 0,
 	lastFilePath: "",
 	lastPublishedUrl: ""
-	};
+};
 var flStartupFail = false;
 var flPrefsChanged = false, flFeedChanged = false, flHistoryChanged = false;
 var whenLastUserAction = new Date ();
@@ -68,7 +68,7 @@ var theData = { //the file being edited now
 	publishedUrl: "",
 	linkJson: "", //3/24/15 by DW
 	nameTemplate: appPrefs.nameDefaultTemplate //3/28/15 by DW
-	};
+};
 var urlTemplateFile = "templates/default.html";
 var jsontextForLastSave;
 var whenLastUserAction = new Date (), whenLastKeystroke = whenLastUserAction;
@@ -79,7 +79,7 @@ var defaultEditorButtons = ["bold", "italic", "underline", "strikethrough", "anc
 var defaultTemplates = {
 	"Default": "http://myword.io/templates/default.html",
 	"Plain": "http://myword.io/templates/plain/template.html"
-	};
+};
 var disqusCode =  //3/31/15 by DW
 	"<div id=\"disqus_thread\"></div>\n<script type=\"text/javascript\">var disqus_shortname = '[%disqusgroupname%]';\n(function() {\nvar dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;\ndsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';\n(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);\n})();\n</script>";
 
@@ -91,29 +91,29 @@ function patchPrefs () {
 			if (obj.flPgfLevelMarkdown === undefined) {
 				obj.flPgfLevelMarkdown = true;
 				prefsChanged ();
-				}
 			}
+		}
 	//3/27/15 by DW -- some early files in rssHistory have incorrect filepath fields
 		for (var i = 0; i < appPrefs.rssHistory.length; i++) {
 			var obj = appPrefs.rssHistory [i];
 			if (endsWith (obj.filepath, ".html")) {
 				obj.filepath = stringMid (obj.filepath, 1, obj.filepath.length - 5) + ".json";
 				prefsChanged ();
-				}
 			}
-	}
+		}
+}
 function keyupTextArea () {
-	}
+}
 function runStartupCode () { //4/3/15 by DW
 	if (config != undefined) {
 		if (config.startupCode != undefined) {
 			if (config.startupCode.length > 0) {
 				var s = config.startupCode.replace ("\n", "");
 				eval (s);
-				}
 			}
 		}
 	}
+}
 function getAllPosts (callback) {
 	var postArray = [];
 	function readOne (ix) {
@@ -122,38 +122,37 @@ function getAllPosts (callback) {
 			twGetFile (path, true, true, function (error, data) {
 				if (data != undefined) {
 					postArray [ix - 1] = JSON.parse (data.filedata);
-					}
+				}
 				readOne (ix - 1);
-				});
-			}
-		else {
+			});
+		} else {
 			twUploadFile ("files.json", jsonStringify (postArray), "application/json", false, function (data) {
 				if (callback !== undefined) {
 					callback (postArray, data.url);
-					}
-				});
-			}
+				}
+			});
 		}
-	readOne (appPrefs.fileSerialnum);
 	}
+	readOne (appPrefs.fileSerialnum);
+}
 function getPostsInJson () {
 	getAllPosts (function (postArray, urlJsonFile) {
 		confirmDialog ("View the JSON file?", function () {
 			window.open (urlJsonFile);
-			});
 		});
-	}
+	});
+}
 function closeFileOpenDialog () {
 	$("#idFileOpenDialog").modal ("hide"); 
-	}
+}
 function openThisFile (id) {
 	console.log ("openThisFile: id == " + id);
 	appPrefs.lastFilePath = id;
 	openEssayFile (function () {
 		prefsChanged ();
 		closeFileOpenDialog ();
-		});
-	}
+	});
+}
 function fileOpenDialog () {
 	getAllPosts (function (postArray, urlJsonFile) {
 		var htmltext = "<div class=\"divFileList\"><ul>";
@@ -161,12 +160,12 @@ function fileOpenDialog () {
 			var obj = postArray [i];
 			console.log (obj.title + ": " + obj.filePath);
 			htmltext += "<li><a onclick=\"openThisFile ('" + obj.filePath + "');\">" + obj.title + "</a></li>";
-			}
+		}
 		htmltext += "</ul></div>";
 		$("#idFileOpenDialog").modal ("show"); 
 		$("#idWhereToDisplayFileList").html (htmltext);
-		});
-	}
+	});
+}
 function publishAllPosts () { //3/24/15 by DW
 	confirmDialog ("Publish all posts?", function () {
 		var savedFilePath = appPrefs.lastFilePath;
@@ -177,21 +176,20 @@ function publishAllPosts () { //3/24/15 by DW
 					console.log ("publishAllPosts: publishing " + appPrefs.lastFilePath);
 					publishButtonClick (false, function () {
 						publishOne (ix - 1, callback);
-						});
 					});
-				}
-			else {
+				});
+			} else {
 				if (callback !== undefined) {
 					callback ();
-					}
 				}
 			}
+		}
 		publishOne (appPrefs.fileSerialnum, function () {
 			appPrefs.lastFilePath = savedFilePath;
 			openEssayFile ();
-			});
 		});
-	}
+	});
+}
 function fieldsToHistory () { //copy from theData into the current history array element
 	function getBodyText () {
 		//Changes
@@ -200,9 +198,9 @@ function fieldsToHistory () { //copy from theData into the current history array
 		var s = "";
 		for (var i = 0; i < theData.subs.length; i++) {
 			s += theData.subs [i] + "\n\n";
-			}
-		return (s);
 		}
+		return (s);
+	}
 	for (var i = 0; i < appPrefs.rssHistory.length; i++) {
 		var obj = appPrefs.rssHistory [i];
 		if (obj.filepath == theData.filePath) {
@@ -220,19 +218,19 @@ function fieldsToHistory () { //copy from theData into the current history array
 			obj.flPgfLevelMarkdown = true; //7/24/15 by DW
 			historyChanged (); //3/27/15 by DW
 			break;
-			}
 		}
 	}
+}
 function addToHistory () {
 	var obj = new Object ();
 	appPrefs.rssHistory.unshift (obj);
 	while (appPrefs.rssHistory.length > appPrefs.rssMaxItemsInFeed) {
 		appPrefs.rssHistory.pop ();
-		}
+	}
 	obj.guid = new Object ();
 	obj.filepath = theData.filePath; //otherwise fieldsToHistory won't find it! oy
 	fieldsToHistory ();
-	}
+}
 function buildHistoryMenu () { //3/27/15 by DW
 	var maxCharsHistoryMenuItem = 25;
 	$("#idHistoryMenuList").empty ();
@@ -258,13 +256,13 @@ function buildHistoryMenu () { //3/27/15 by DW
 		menuItemNameLink.attr ("target", "_blank");
 		liMenuItem.append (menuItemNameLink);
 		$("#idHistoryMenuList").append (liMenuItem);
-		}
 	}
+}
 function rssCloudPing (urlServer, urlFeed) { //7/25/15 by DW
 	$.post (urlServer, {url: urlFeed}, function (data, status) {
 		console.log ("rssCloudPing: urlServer == " + urlServer + ", urlFeed == " + urlFeed + ", status == " + status);
-		});
-	}
+	});
+}
 function myWordBuildRssFeed () {
 	var now = new Date (), flcloud = false;
 	var headElements = {
@@ -277,7 +275,7 @@ function myWordBuildRssFeed () {
 		twitterScreenName: twGetScreenName (),
 		maxFeedItems: appPrefs.rssMaxItemsInFeed,
 		appDomain: appConsts.domain
-		}
+	}
 	if (config.rssCloud !== undefined) { //7/25/15 by DW
 		if (getBoolean (config.rssCloud.enabled)) {
 			headElements.flRssCloudEnabled = true;
@@ -287,41 +285,39 @@ function myWordBuildRssFeed () {
 			headElements.rssCloudRegisterProcedure = "";
 			headElements.rssCloudProtocol = "http-post";
 			flcloud = true;
-			}
 		}
+	}
 	var xmltext = buildRssFeed (headElements, appPrefs.rssHistory);
 	twUploadFile ("rss.xml", xmltext, "text/xml", false, function (data) {
 		console.log ("myWordBuildRssFeed: " + data.url + " (" + secondsSince (now) + " seconds)");
 		if (appPrefs.rssFeedUrl != data.url) {
 			appPrefs.rssFeedUrl = data.url;
 			prefsChanged ();
-			}
+		}
 		if (flcloud) { //7/25/15 by DW
 			var urlRssCloudServer = "http://" + headElements.rssCloudDomain + ":" + headElements.rssCloudPort + "/ping";
 			rssCloudPing (urlRssCloudServer, data.url);
-			}
-		});
-	}
+		}
+	});
+}
 function viewPrefs () {
 	console.log (jsonStringify (appPrefs));
-	}
+}
 function viewPublishedFile () {
 	var url = theData.publishedUrl;
 	if (url.length == 0) {
 		alertDialog ("Can't view the file because the current essay hasn't been published yet.");
-		}
-	else {
+	} else {
 		window.open (url);
-		}
 	}
+}
 function viewFeed () {
 	if (appPrefs.rssFeedUrl.length == 0) {
 		alertDialog ("Can't view the feed because no essays have been posted.");
-		}
-	else {
+	} else {
 		window.open (appPrefs.rssFeedUrl);
-		}
 	}
+}
 function applyPrefs () {
 	theData.authorname = appPrefs.authorName;
 	theData.authorwebsite = appPrefs.authorWebsite;
@@ -329,7 +325,7 @@ function applyPrefs () {
 	appPrefs.defaultImageUrl = trimWhitespace (appPrefs.defaultImageUrl); //3/8/15 by DW
 	
 	prefsChanged ();
-	}
+}
 function newFileData () { //set fields of theData to represent a new file
 	theData.body = "";
 	theData.title = "";
@@ -354,73 +350,73 @@ function newFileData () { //set fields of theData to represent a new file
 	appPrefs.lastPublishedUrl = "";
 	viewPublishedUrl ();
 	prefsChanged ();
-	}
+}
 
 function setBackgroundImage () {
 	askDialog ("URL of background image:", theData.img, "Enter the URL of your background image here.", function (s, flcancel) {
 		if (!flcancel) {
 			theData.img = s;
 			prefsChanged ();
-			}
-		});
-	}
+		}
+	});
+}
 function setEditorFields (titletext, descriptiontext, bodytext) {
 	$("#idTitleEditor").html (titletext);
 	var editorTitle = new MediumEditor (".divTitleEditor", {
 		placeholder: {
 			text: "Title"
-			},
+		},
 		toolbar: {
 			buttons: defaultEditorButtons,
-			},
+		},
 		buttonLabels: "fontawesome",
 		disableReturn: true
-		});
+	});
 	
 	$("#idDescriptionEditor").html (descriptiontext);
 	var editorDescription = new MediumEditor (".divDescriptionEditor", {
 		placeholder: {
 			text: "Description"
-			},
+		},
 		toolbar: {
 			buttons: defaultEditorButtons,
-			},
+		},
 		buttonLabels: "fontawesome",
 		disableReturn: true
-		});
+	});
 	
 	$("#idBodyEditor").html (bodytext);
 	var editorBody = new MediumEditor (".divBodyEditor", {
 		placeholder: {
 			text: "Tell your story..."
-			},
+		},
 		toolbar: {
 			buttons: defaultEditorButtons,
-			},
+		},
 		buttonLabels: "fontawesome"
-		});
-	}
+	});
+}
 function subsToText (subs) {
 	var s = "";
 	for (var i = 0; i < subs.length; i++) {
 		s += "<p>" + subs [i] + "</p>\n";
-		}
-	return (s);
 	}
+	return (s);
+}
 
 function dataToFields () {
 	
 	setEditorFields (theData.title, theData.description, subsToText (theData.subs));
 	
 	
-	}
+}
 function fieldsToData () {
 	theData.title = $("#idTitleEditor").html ();
 	theData.description = $("#idDescriptionEditor").html ();
 	theData.body = $("#idBodyEditor").html ();
 	theData.subs = theData.body.split ("\n\n"); //4/2/15 by DW
 	
-	}
+}
 function saveButtonClick (callback) {
 	var now = new Date ();
 	
@@ -437,19 +433,19 @@ function saveButtonClick (callback) {
 		$("#idSavedStatus").html ("SAVED");
 		if (callback != undefined) {
 			callback ();
-			}
-		});
-	}
+		}
+	});
+}
 function newButtonClick () {
 	confirmDialog ("Erase all fields, starting a new web page?", function () {
 		newFileData ();
 		dataToFields ();
 		saveButtonClick ();
-		});
-	}
+	});
+}
 function viewPublishedUrl () {
 	$("#idPublishedUrl").html ("<a href=\"" + appPrefs.lastPublishedUrl + "\" target=\"_blank\">" + appPrefs.lastPublishedUrl + "</a>");
-	}
+}
 function publishButtonClick (flInteract, callback) {
 	//Changes
 		//3/24/15; 6:53:47 PM by DW
@@ -463,18 +459,17 @@ function publishButtonClick (flInteract, callback) {
 				var lt = theList [i];
 				if ((lt.length > 0) && (lt != "<p>") && (lt != "</p>")) {
 					markdowntext += "<p>" + md.makeHtml (lt) + "</p>";
-					}
 				}
+			}
 			return (markdowntext);
-			}
-		else {
+		} else {
 			return (s);
-			}
 		}
+	}
 	var now = new Date (), urlTemplate;
 	if (flInteract === undefined) {
 		flInteract = true;
-		}
+	}
 	fieldsToData ();
 	//set urlTemplate, unicase search
 		var lowername = stringLower (theData.nameTemplate);
@@ -482,14 +477,14 @@ function publishButtonClick (flInteract, callback) {
 			if (stringLower (x) == lowername) {
 				urlTemplate = config.templates [x];
 				break;
-				}
 			}
+		}
 		if (urlTemplate === undefined) { //not found, use the first as default
 			for (var x in config.templates) {
 				urlTemplate = config.templates [x];
 				break;
-				}
 			}
+		}
 		
 		
 	function uploadOnce (templatetext, callback) {
@@ -500,15 +495,14 @@ function publishButtonClick (flInteract, callback) {
 		if (urlimage.length == 0) {
 			if (appPrefs.flUseDefaultImage && (appPrefs.defaultImageUrl.length > 0)) { //user has specified a default image, use it
 				urlimage = appPrefs.defaultImageUrl;
-				}
-			else {
+			} else {
 				urlimage = globalDefaultImageUrl;
-				}
 			}
+		}
 		
 		if (appPrefs.flDisqusComments) {//3/31/15 by DW
 			commentstext = replaceAll (disqusCode, "[%disqusgroupname%]", appPrefs.disqusGroupName);
-			}
+		}
 		
 		var pagetable = { //3/30/15 by DW -- add appPrefs and appConsts to the pagetable
 			flFromEditor: true,
@@ -532,7 +526,7 @@ function publishButtonClick (flInteract, callback) {
 			urltwitterprofile: "https://twitter.com/" + username, //8/7/15 by DW
 			appConsts: new Object (), //3/30/15 by DW
 			appPrefs: new Object () //3/30/15 by DW
-			};
+		};
 		copyScalars (appConsts, pagetable.appConsts);
 		copyScalars (appPrefs, pagetable.appPrefs);
 		pagetable.pagetableinjson = jsonStringify (pagetable);
@@ -548,9 +542,9 @@ function publishButtonClick (flInteract, callback) {
 				theData.publishedUrl = data.url;
 				appPrefs.lastPublishedUrl = data.url; //7/29/15 by DW
 				callback (data);
-				});
 			});
-		}
+		});
+	}
 	function afterUpload (data) {
 		viewPublishedUrl ();
 		prefsChanged ();
@@ -561,16 +555,15 @@ function publishButtonClick (flInteract, callback) {
 					window.open (data.url);
 					if (callback != undefined) {
 						callback ();
-						}
-					});
-				}
-			else {
+					}
+				});
+			} else {
 				if (callback != undefined) {
 					callback ();
-					}
 				}
-			});
-		}
+			}
+		});
+	}
 	readHttpFile (urlTemplate, function (templatetext) {
 		console.log ("publishButtonClick: read " + templatetext.length + " chars from " + urlTemplate);
 		uploadOnce (templatetext, function (data) {
@@ -579,23 +572,22 @@ function publishButtonClick (flInteract, callback) {
 				theData.publishedUrl = data.url;
 				uploadOnce (templatetext, function (data) {
 					afterUpload (data);
-					});
-				}
-			else {
+				});
+			} else {
 				afterUpload (data);
-				}
-			});
+			}
 		});
-	}
+	});
+}
 function buildTemplateMenu () { //3/28/15 by DW
 	$("#idTemplateSelect").empty ();
 	for (x in config.templates) {
 		$("#idTemplateSelect").append ("<option value=\"" + stringLower (x) + "\">" + x + "</option>");
-		}
 	}
+}
 function templateMenuSelect () { //3/28/15 by DW
 	console.log ("templateMenuSelect: you chose == " + $("#idTemplateSelect").val () + " template.");
-	}
+}
 function openEssayFile (callback) {
 	if (appPrefs.lastFilePath.length == 0) { //first run
 		newFileData ();
@@ -603,9 +595,8 @@ function openEssayFile (callback) {
 		jsontextForLastSave = jsonStringify (theData);
 		if (callback !== undefined) {
 			callback ();
-			}
 		}
-	else {
+	} else {
 		console.log ("openEssayFile: appPrefs.lastFilePath == " + appPrefs.lastFilePath);
 		twGetFile (appPrefs.lastFilePath, true, true, function (error, data) {
 			if (data != undefined) {
@@ -613,59 +604,56 @@ function openEssayFile (callback) {
 					theData = JSON.parse (data.filedata);
 					if (theData.nameTemplate === undefined) {
 						theData.nameTemplate = appPrefs.nameDefaultTemplate;
-						}
-					console.log ("openEssayFile: " + data.filedata.length + " chars.");
 					}
+					console.log ("openEssayFile: " + data.filedata.length + " chars.");
+				}
 				catch (err) {
 					newFileData ();
 					console.log ("openEssayFile: error == " + err.message);
-					}
 				}
-			else {
+			} else {
 				newFileData ();
 				console.log ("openEssayFile: error == " + jsonStringify (error));
-				}
+			}
 			dataToFields ();
 			jsontextForLastSave = jsonStringify (theData);
 			if (callback != undefined) {
 				callback ();
-				}
-			});
-		}
+			}
+		});
 	}
+}
 function showHideEditor () {
 	var homeDisplayVal = "none", aboutDisplayVal = "none", startupFailDisplayVal = "none";
 	
 	if (twIsTwitterConnected ()) {
 		if (flStartupFail) {
 			startupFailDisplayVal = "block";
-			}
-		else {
+		} else {
 			homeDisplayVal = "block";
-			}
 		}
-	else {
+	} else {
 		aboutDisplayVal = "block";
-		}
+	}
 	
 	$("#idEditor").css ("display", homeDisplayVal);
 	$("#idLogonMessage").css ("display", aboutDisplayVal);
 	$("#idStartupFailBody").css ("display", startupFailDisplayVal);
-	}
+}
 function prefsChanged () {
 	flPrefsChanged = true;
-	}
+}
 function historyChanged () {
 	flHistoryChanged = true;
-	}
+}
 function feedChanged () {
 	flFeedChanged = true;
-	}
+}
 function settingsCommand () {
 	twStorageToPrefs (appPrefs, function () {
 		prefsDialogShow ();
-		});
-	}
+	});
+}
 function switchServer () { //3/19/15 by DW
 	askDialog ("URL of new server:", twStorageData.urlTwitterServer, "Enter the URL of your server here.", function (s, flcancel) {
 		if (!flcancel) {
@@ -673,9 +661,9 @@ function switchServer () { //3/19/15 by DW
 			twStorageData.urlTwitterServer = s;
 			twDisconnectFromTwitter ();
 			twConnectToTwitter ();
-			}
-		});
-	}
+		}
+	});
+}
 function initMenus () {
 	var cmdKeyPrefix = getCmdKeyPrefix (); //10/6/14 by DW
 	document.getElementById ("idMenuProductName").innerHTML = appConsts.productnameForDisplay; 
@@ -685,16 +673,16 @@ function initMenus () {
 		var liContent = li.html ();
 		liContent = liContent.replace ("Cmd-", cmdKeyPrefix);
 		li.html (liContent);
-		});
+	});
 	twUpdateTwitterMenuItem ("idTwitterConnectMenuItem");
 	twUpdateTwitterUsername ("idTwitterUsername");
-	}
+}
 function tellOtherInstancesToQuit () {
 	randomMysteryString = getRandomPassword (25);
 	localStorage.youAreNotNeeded = randomMysteryString; 
-	}
+}
 function initEditor () {
-	}
+}
 function everySecond () {
 	var now = clockNow ();
 	twUpdateTwitterMenuItem ("idTwitterConnectMenuItem");
@@ -711,23 +699,23 @@ function everySecond () {
 				saveButtonClick (function () {
 					if (appPrefs.flAutoPublish) { //7/23/15 by DW
 						publishButtonClick (false);
-						}
-					});
-				}
+					}
+				});
 			}
+		}
 	
 	if (flPrefsChanged) {
 		twPrefsToStorage (appPrefs);
 		flPrefsChanged = false;
-		}
+	}
 	if (flHistoryChanged) { //3/27/15 by DW
 		buildHistoryMenu ();
 		flHistoryChanged = false;
-		}
+	}
 	if (flFeedChanged) {
 		myWordBuildRssFeed ();
 		flFeedChanged = false;
-		}
+	}
 	
 	//if another copy of MWE launched, we are not needed, we quit
 		if (localStorage.youAreNotNeeded != undefined) {
@@ -735,14 +723,14 @@ function everySecond () {
 				if (ctCloseAttempts < 2) { 
 					ctCloseAttempts++;
 					window.close ();
-					}
 				}
 			}
-	}
+		}
+}
 function onKeyup () {
 	whenLastUserAction = new Date ();
 	whenLastKeystroke = whenLastUserAction;
-	}
+}
 function initCmdKeys () {
 	myCombos = [
 		{ //Cmd-P to publish
@@ -753,11 +741,11 @@ function initCmdKeys () {
 				event.stopPropagation ();
 				event.preventDefault ();
 				return (false);
-				}
 			}
-		];
+		}
+	];
 	keypress.register_many (myCombos);
-	}
+}
 function startup () {
 	var flSkipConfigRead = false;
 	function readConfigJson (flSkipServerSet, callback) { //3/20/15 by DW
@@ -770,32 +758,32 @@ function startup () {
 						if (jstruct.urlTwitterServer !== undefined) {
 							twStorageData.urlTwitterServer = jstruct.urlTwitterServer;
 							console.log ("readConfigJson: twStorageData.urlTwitterServer == " + twStorageData.urlTwitterServer);
-							}
 						}
+					}
 					if (jstruct.urlDefaultImage != undefined) { //3/21/15 by DW
 						globalDefaultImageUrl = jstruct.urlDefaultImage;
 						console.log ("readConfigJson: globalDefaultImageUrl == " + globalDefaultImageUrl);
-						}
+					}
 					if (jstruct.googleAnalyticsAccount !== undefined) { //3/26/15 by DW
 						appConsts.googleAnalyticsAccount = jstruct.googleAnalyticsAccount;
 						appConsts.domain = stringNthField (window.location.href, "/", 3); //3/22/15 by DW
 						console.log ("readConfigJson: appConsts.domain == " + appConsts.domain);
 						console.log ("readConfigJson: appConsts.googleAnalyticsAccount == " + appConsts.googleAnalyticsAccount);
 						initGoogleAnalytics (); 
-						}
+					}
 					config = jstruct; //3/28/15 by DW -- keep it as a global
 					if (config.templates === undefined) { //3/30/15 by DW
 						config.templates = defaultTemplates;
-						}
-					buildTemplateMenu (); //3/28/15 by DW
 					}
+					buildTemplateMenu (); //3/28/15 by DW
+				}
 				catch (err) {
 					console.log ("readConfigJson: err == " + err);
-					}
 				}
+			}
 			callback ();
-			});
-		}
+		});
+	}
 	console.log ("startup");
 	hitCounter (); 
 	initGoogleAnalytics (); 
@@ -814,10 +802,9 @@ function startup () {
 			//if the user specified a server that happens to be our server, patch it up with the new URL
 				twStorageData.urlTwitterServer = replaceAll (twStorageData.urlTwitterServer, "http://twitter.myword.io/", appConsts.urlTwitterServer); //5/9/15 by DW
 			flSkipConfigRead = true; //the localStorage value takes precedence
-			}
-		else {
+		} else {
 			twStorageData.urlTwitterServer = appConsts.urlTwitterServer;
-			}
+		}
 	readConfigJson (flSkipConfigRead, function () {
 		if (twIsTwitterConnected ()) {
 			twUserWhitelisted (twGetScreenName (), function (flwhitelisted) {
@@ -840,7 +827,7 @@ function startup () {
 											appPrefs.authorName = userData.name;
 											theData.authorname = userData.name; //3/21/15 by DW
 											prefsChanged ();
-											}
+										}
 										if (appPrefs.authorWebsite.length == 0) {
 											appPrefs.authorWebsite = userData.url;
 											theData.authorwebsite = userData.url; //3/21/15 by DW
@@ -849,24 +836,22 @@ function startup () {
 												appPrefs.authorWebsite = longUrl;
 												theData.authorwebsite = longUrl; //3/21/15 by DW
 												prefsChanged ();
-												});
-											}
+											});
+										}
 										twitterToPrefs (userData); //fill in RSS prefs with info we got from Twitter
-										});
+									});
 									runStartupCode (); //4/3/15 by DW
 									self.setInterval (everySecond, 1000); 
-									});
 								});
-							}
-						});
-					}
-				else {
+							});
+						}
+					});
+				} else {
 					alertDialog ("Can't open the editor because there was an error connecting to the server, " + twStorageData.urlTwitterServer + ", or the user \"" + twGetScreenName () + "\" is not whitelisted.");
-					}
-				});
-			}
-		else {
+				}
+			});
+		} else {
 			showHideEditor ();
-			}
-		});
-	}
+		}
+	});
+}
