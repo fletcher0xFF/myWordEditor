@@ -10,13 +10,11 @@ And the <a href="http://scripting.com/2015/03/23/mywordEditorIsOpenSource.html">
 
 Here's the <a href="http://myword.io/editor/">demo app</a> for this project, MyWord Editor.
 
-You can set up your own blogging environment and use it to host your writing and for other people, your friends, colleagues, members of a club, whatever you like.
-
-My name is Dave Winer. I blog at <a href="http://scripting.com/">Scripting News</a>. I wrote some of the earliest blogging, RSS and podcasting software. 
+You can set up your own blogging environment and use it to host your writing and for other people, your friends, colleagues, members of a club, whatever you like. 
 
 #### It's radical software
 
-These days blogging tools try to lock you into their business model, and lock other developers out. I have the freedom to do what I want, so I decided to take the exact opposite approach. I don't  want to operate a free public blogging tool and lock users in and make them dependent on me. Instead, I want to learn from thinkers and writers and developers. I want to engage with other minds. Making money, at this stage of my career, is not so interesting to me. I'd much rather make ideas, and new working relationships, and friends. 
+These days blogging tools try to lock you into their business model, and lock other developers out. I don't  want to operate a free public blogging tool and lock users in and make them dependent on me. Instead, I want to learn from thinkers and writers and developers.
 
 So MyWord Editor is radically <a href="http://scripting.com/2015/03/19/mywordEditorWillBeSilofreeFromTheStart.html">silo-free</a>. 
 
@@ -122,9 +120,5 @@ In addition to generating an HTML file for each essay, we also generate a JSON f
 
 #### Support
 
-If you're a developer, or running a server, please ask questions on the <a href="https://groups.google.com/forum/?fromgroups#!forum/server-snacks">server-snacks</a> mail list.
-
-If you're a blogger, and need help writing with MWE, please join the <a href="https://groups.google.com/forum/?fromgroups#!forum/myword-editor">myword-editor</a> mail list.
-
-In either case, please read the docs and scratch your head at least a little before <a href="http://scripting.com/2014/03/19/howToAskForHelpWithSoftware.html">asking for help</a>. 
+Please ask questions or report bugs on the <a href="https://github.com/fletcher0xFF/myWordEditor/issues">issues page</a> for this GitHub project. 
 
