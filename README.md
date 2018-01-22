@@ -36,7 +36,7 @@ Test the installation by logging on. Follow the <a href="http://myword.smallpict
 
 A new fork has begun. The first official release will be version 0.7.4 and is expected to be complete in 2-3 weeks.
 
-##### v0.73 -- Sept. 9, 2017 by DW
+##### v0.73 -- Sept. 19, 2017 by DW
 
 Changed URLs in includes in &lt;head> section of index.html to not be specific to HTTP, so that <a href="https://github.com/scripting/myWordEditor/issues/4">people</a> can run their nodeStorage servers behind HTTPS.
 
@@ -44,7 +44,7 @@ Changed URLs in includes in &lt;head> section of index.html to not be specific t
 
 Added <s>strikethrough</s> button to the toolbar, demonstrating that we can add items to the toolbar. They come from <a href="https://github.com/yabwe/medium-editor#all-buttons">this list</a>. 
 
-##### v0.71 -- July 27, 2017 by DW
+##### v0.71 -- July 27, 2015 by DW
 
 Add Facebook and Twitter metadata to the &lt;head> section of the home page.
 
