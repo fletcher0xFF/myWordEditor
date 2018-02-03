@@ -1,99 +1,111 @@
 body {
+	background-color: whitesmoke;
 	font-family: Ubuntu;
 	font-size: 18px;
 	line-height: 140%;
-	background-color: whitesmoke;
-	}
+}
+
 .divPageBody {
-	width: 65%;
-	margin-top: 120px;
+	margin-bottom: 400px;
 	margin-left: auto;
 	margin-right: auto;
-	margin-bottom: 400px;
-	}
+	margin-top: 120px;
+	width: 65%;
+}
+
 .divBodyEditor {
-	font-family: "Merriweather";
+	font-family: 'Merriweather';
 	font-size: 19px;
-	letter-spacing: 0.01rem;
-	font-weight: 400;
 	font-style: normal;
+	font-weight: 400;
+	letter-spacing: 0.01rem;
 	line-height: 1.69;
-	padding-left: 6px;
-	padding-right: 6px;
 	margin-top: 40px;
 	min-height: 300px;
-	}
+	padding-left: 6px;
+	padding-right: 6px;
+}
+
 .divBodyEditor p {
-	margin-top: 3px;
 	margin-bottom: 17px;
-	}
+	margin-top: 3px;
+}
+
 .divBodyEditor h3 {
-	font-family: "Open Sans";
+	font-family: 'Open Sans';
 	font-size: 1.3em;
 	margin-top: 0;
-	}
+}
+
 .divBodyEditor h2 {
-	font-family: "Open Sans";
+	font-family: 'Open Sans';
 	font-size: 1.7em;
 	margin-top: 0;
-	}
+}
+
 .divTitleEditor {
-	font-family: "Open Sans";
+	font-family: 'Open Sans';
 	font-size: 50px;
 	font-weight: 800;
 	letter-spacing: -0.03em;
+	line-height: 100%;
 	min-height: 1em;
-	
-	padding-top: .3em;
 	padding-bottom: .3em;
 	padding-left: 6px;
 	padding-right: 6px;
-	line-height: 100%;
-	}
+	padding-top: .3em;
+}
+
 .divTitleEditor p {
-	-webkit-margin-before: 0;
 	-webkit-margin-after: 0;
-	}
+	-webkit-margin-before: 0;
+}
+
 .divDescriptionEditor {
-	font-family: "Open Sans";
+	font-family: 'Open Sans';
 	font-size: 30px;
 	font-weight: 800;
 	letter-spacing: -0.03em;
-	min-height: 1em;
+	line-height: 100%;
 	margin-top: 0;
-	
-	padding-top: .3em;
+	min-height: 1em;
 	padding-bottom: .3em;
 	padding-left: 6px;
 	padding-right: 6px;
-	line-height: 100%;
-	}
-:focus, :visited:focus {
-	
-	outline: 1px solid silver;
+	padding-top: .3em;
+}
+
+:focus,
+:visited:focus {
 	background-color: white;
-	
-	}
+	outline: 1px solid silver;
+}
+
 .divBelowTheFold {
 	margin-top: 40px;
-	}
+}
+
 .divChangeNotes {
 	margin-top: 25px;
-	}
+}
+
 .divChangeNotes li {
 	margin-bottom: .4em;
-	}
+}
+
 .medium-editor-placeholder:after {
-	font-style: normal;
 	font-size: 1em;
+	font-style: normal;
 	top: .3em;
-	}
+}
+
 .divVersionNumber {
-	font-size: 12px;
 	float: right;
+	font-size: 12px;
 	padding: 19px;
-	}
+}
+
 .iMenuCheck {
 	margin-left: -20px;
 	margin-right: 4px;
-	}
+}
